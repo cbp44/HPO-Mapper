@@ -1,129 +1,123 @@
-HPO Mapper: Semantic Phenotype-to-Ontology Mapping Toolkit
-<p align="center"> <img width="250" height="250" src="https://github.com/UoS-HGIG/IBD_LLM/blob/main/img/llamas.png"> </p>
-Overview
+# HPO Mapper: Semantic Phenotype-to-Ontology Mapping Toolkit
 
-HPO Mapper is a standalone, scalable, AI-assisted toolkit for mapping clinical phenotypic descriptions to the Human Phenotype Ontology (HPO) and associated genes. It ingests structured or semi-structured clinical findings—optionally paired with anatomical regions—and converts them into standardised HPO terms using embedding-based semantic similarity, with optional large language model (LLM) mediation.
+![HPO Mapper Workflow](HPO%20Mapper%20Visual%20Abstract.jpeg)
 
-HPO Mapper is designed to support robust phenotype normalisation from heterogeneous clinical inputs, enabling downstream genotype–phenotype integration, cohort harmonisation, and precision medicine workflows. All protocols are designed for local execution, supporting privacy-preserving deployment in clinical and research environments.
+**HPO Mapper** is a standalone, scalable, AI-assisted toolkit for mapping clinical phenotypic descriptions to the **Human Phenotype Ontology (HPO)** and associated genes. It ingests structured or semi-structured clinical findings—optionally paired with anatomical regions—and converts them into standardised HPO terms using **embedding-based semantic similarity**, with optional **large language model (LLM)** mediation.
 
-HPO Mapper Protocols
+HPO Mapper supports robust phenotype normalisation from heterogeneous clinical inputs and enables downstream **genotype–phenotype integration**, **cohort harmonisation**, and **precision medicine** workflows. The tool is designed for real-world clinical and research deployment, with support for local execution and privacy-preserving operation.
 
-HPO Mapper is available in three complementary protocols, reflecting increasing levels of AI mediation and flexibility:
+---
 
-Protocol 1 — Embedding-Based Mapping (Published)
+## HPO Mapper Protocols
 
-📄 Featured in MED
-🔗 https://doi.org/10.1016/j.medj.2025.100895
+HPO Mapper is available in **three complementary protocols**, reflecting increasing levels of AI mediation and flexibility.
 
-Cosine similarity–based retrieval over an HPO synonym embedding space
+### Protocol 1 — Embedding-Based Mapping
 
-Deterministic, explainable mapping
+- Embedding-based semantic similarity over HPO terms and synonyms
+- Deterministic and fully explainable
+- No LLM dependency
+- Designed for scalability and reproducibility
 
-Optimised for scalability and reproducibility
+This protocol is described in the following publication:
 
-No LLM dependency
+**Application of generative artificial intelligence to utilize unstructured clinical data for acceleration of inflammatory bowel disease research**  
+Kadhim AZ, Green Z, Nazari I, Baker J, George M, Heinson A, Vadgama B, Stammers M, Kipps C, Beattie RM, Ashton JJ, Ennis S  
+*MED* (2025)  
+https://doi.org/10.1016/j.medj.2025.100895
 
-Recommended for: large-scale cohort processing and benchmarking
+---
 
-Protocol 2 — Embedding Retrieval + LLM Quality Control
+### Protocol 2 — Embedding Retrieval + LLM Quality Control
 
-🧠 Cosine similarity + LLM QC
+- Cosine similarity–based candidate retrieval
+- LLM performs post-hoc quality control of selected HPO terms
+- Incorrect mappings are flagged but not automatically changed
 
-Embedding-based candidate retrieval
+**Recommended for:** high-precision clinical pipelines and audit-aware workflows
 
-LLM performs post-hoc validation of selected HPO terms
+---
 
-Flags potentially incorrect mappings without altering retrieval
+### Protocol 3 — Embedding Retrieval + LLM-Based HPO Selection
 
-Recommended for: high-precision clinical pipelines and audit-aware workflows
+- Cosine similarity–based top-K candidate retrieval
+- LLM selects the most appropriate HPO term(s) using ontology definitions
+- Supports one-to-many mappings where clinically appropriate
 
-Protocol 3 — Embedding Retrieval + LLM-Based HPO Selection
+**Recommended for:** complex phenotypes, ambiguous findings, and research exploration
 
-🧠🧠 Cosine similarity + LLM-mediated selection
+---
 
-Top-K candidate HPO terms retrieved via embeddings
-
-LLM selects the most appropriate term(s) using ontology definitions
-
-Supports one-to-many mappings where clinically appropriate
-
-Recommended for: complex phenotypes, ambiguous findings, and research exploration
-
-Workflow Overview
-<p align="center"> <img src="HPO Mapper Visual Abstract.jpeg"> </p>
-Tool Description
+## Tool Description
 
 HPO Mapper implements a modular phenotype-mapping pipeline that combines:
 
-Semantic embeddings of HPO terms and synonyms
-
-Cosine similarity–based candidate retrieval
-
-Optional LLM-based quality control or candidate selection
-
-Gene association lookup via curated HPO gene annotations
+- Semantic embeddings of HPO terms and synonyms
+- Cosine similarity–based candidate retrieval
+- Optional LLM-based quality control or mediation
+- Gene association lookup via curated HPO gene annotations
 
 The tool supports both:
 
-Paired finding + anatomical region inputs
+- Paired finding + anatomical region inputs
+- Finding-only inputs when region information is unavailable
 
-Finding-only inputs when region data are unavailable
+---
 
-HPO Mapper Workflow
+## HPO Mapper Workflow
 
-Load Clinical Findings
-Input findings are provided as structured JSON records.
+1. **Load Clinical Findings**  
+   Input findings are provided as structured JSON records.
 
-Candidate Retrieval
-Clinical text is embedded and compared against the HPO embedding space using cosine similarity.
+2. **Candidate Retrieval**  
+   Clinical text is embedded and compared against the HPO embedding space using cosine similarity.
 
-LLM Mediation (Optional)
+3. **LLM Mediation (Optional)**  
+   - Protocol 2: LLM validates retrieved mappings  
+   - Protocol 3: LLM selects the best candidate term(s)
 
-Protocol 2: LLM validates retrieved mappings
+4. **Gene Association Mapping**  
+   Mapped HPO terms are linked to associated genes using curated HPO gene annotations.
 
-Protocol 3: LLM selects best candidate(s) using HPO definitions
+5. **Output Generation**  
+   Results are written to CSV with logging for auditing and reproducibility.
 
-Gene Association Mapping
-Mapped HPO terms are linked to associated genes using curated HPO gene annotations.
+![HPO Ontology](https://github.com/UoS-HGIG/IBD_LLM/blob/main/img/hpo.png)
 
-Output Generation
-Results are written to CSV with logging for auditing and reproducibility.
+---
 
-<p align="center"> <img src="https://github.com/UoS-HGIG/IBD_LLM/blob/main/img/hpo.png"> </p>
-Live Demo and Embeddings
+## Live Demo and Embeddings
 
 An executable demo and the precomputed HPO embedding space are available via Hugging Face:
 
-🔗 HPO Mapper Demo & Embeddings
-👉 https://huggingface.co/spaces/UoS-HGIG/HPOmapper
+**HPO Mapper Demo & Embeddings**  
+https://huggingface.co/spaces/UoS-HGIG/HPOmapper
 
 This space provides:
 
-Interactive demonstration of HPO mapping
+- Interactive demonstration of HPO mapping
+- Precomputed HPO term and synonym embeddings
+- Reference implementations of HPO Mapper workflows
 
-Precomputed HPO term and synonym embeddings
+---
 
-Reference implementations of HPO Mapper protocols
-
-Requirements
+## Requirements
 
 Install required dependencies:
 
+```bash
 pip install numpy ollama sqlite3
-
-
+```
 Pull the embedding model:
-
+```
 ollama pull nomic-embed-text
-
-
-Precomputed embeddings and reference resources are available via:
-👉 https://huggingface.co/spaces/UoS-HGIG/HPOmapper
-
+```
+HPO embeddings and example resources are available via:
+https://huggingface.co/spaces/UoS-HGIG/HPOmapper
 Input Format
 
 Each input file should be a JSON object containing findings and optional anatomical regions:
-
+```
 {
   "subject_id": "",
   "data": [
@@ -133,33 +127,10 @@ Each input file should be a JSON object containing findings and optional anatomi
     }
   ]
 }
+```
+### Template:
+https://github.com/UoS-HGIG/IBD_LLM/blob/main/src/HPO_mapper/hpo_input_template.json
 
-
-Template:
-👉 https://github.com/UoS-HGIG/IBD_LLM/blob/main/src/HPO_mapper/hpo_input_template.json
-
-Customisation
-Similarity Thresholds
-
-Adjust cosine similarity cutoffs to control mapping strictness.
-
-LLM Integration
-
-Enable or disable LLM-based QC or selection depending on performance and compute constraints.
-
-Ontology Updates
-
-Replace or extend the HPO embedding space as new ontology releases become available.
-
-Reference
-
-HPO Mapper: AI-assisted semantic mapping of clinical phenotypes to the Human Phenotype Ontology
-Alex Z Kadhim, Zachary Green, Iman Nazari, Jonathan Baker, Michael George, Ashley Heinson,
-Matt Stammers, Christopher Kipps, R Mark Beattie, James J Ashton, Sarah Ennis
-
-📄 MED (2025)
-🔗 https://doi.org/10.1016/j.medj.2025.100895
-
-License
+### License
 
 This project is licensed under the MIT License.
