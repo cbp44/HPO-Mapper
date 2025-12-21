@@ -1,0 +1,13 @@
+{
+  "subject_id": "P001",
+  "data": [
+    {
+      "finding": "abdominal pain",
+      "anatomical_region": "abdomen"
+    },
+    {
+      "finding": "diarrhoea",
+      "anatomical_region": "gastrointestinal tract"
+    }
+  ]
+}
